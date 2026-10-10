@@ -1,0 +1,26 @@
+{
+  "now": "2026-10-13T02:00:00Z",
+  "posts": [
+    {
+      "username": "mju_lounge",
+      "postURL": "https://www.instagram.com/mju_lounge/p/FixtureMenu12/",
+      "publishedAt": "2026-10-12T00:00:00Z",
+      "caption": "OFFLINE TEST FIXTURE ONLY — not a real restaurant post",
+      "extraction": {
+        "isMenu": true,
+        "uncertainties": [],
+        "username": "mju_lounge",
+        "postURL": "https://www.instagram.com/mju_lounge/p/FixtureMenu12/",
+        "monday": "2026-10-12",
+        "yearEvidence": "2026년 10월 12일~16일",
+        "scope": "테스트 전용 중식",
+        "location": null,
+        "operatingHours": null,
+        "entries": [
+          {"date": "2026-10-12", "dateEvidence": "10/12 (월)", "category": "중식", "title": null, "items": ["테스트 된장찌개"], "note": null, "closureEvidence": null},
+          {"date": "2026-10-13", "dateEvidence": "10/13 (화)", "category": "중식", "title": null, "items": ["테스트 김치볶음밥"], "note": null, "closureEvidence": null}
+        ]
+      }
+    }
+  ]
+}

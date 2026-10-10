@@ -1,0 +1,43 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+		EED83A53AB46182721199B37 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealComponents.swift"; sourceTree = "<group>"; };
+		9616D5AC67EC540B7DCD2C2D = { isa = PBXBuildFile; fileRef = EED83A53AB46182721199B37; };
+		83125E41827F2974D8E382F5 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealFeedConfiguration.swift"; sourceTree = "<group>"; };
+		B2ACF94CB45F4A821E154F02 = { isa = PBXBuildFile; fileRef = 83125E41827F2974D8E382F5; };
+		B09BA383F8AC0B0AB2855A48 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealTheme.swift"; sourceTree = "<group>"; };
+		5D747905D5543C4DC21D31E5 = { isa = PBXBuildFile; fileRef = B09BA383F8AC0B0AB2855A48; };
+		D11F37BE15FE7F49E59CC797 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealViewModel.swift"; sourceTree = "<group>"; };
+		94BEF017BC4A1FDB48522FDD = { isa = PBXBuildFile; fileRef = D11F37BE15FE7F49E59CC797; };
+		FB675CC6BDA202DFF799EC37 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MealsView.swift"; sourceTree = "<group>"; };
+		EB2AF3F949F50866C7DD834E = { isa = PBXBuildFile; fileRef = FB675CC6BDA202DFF799EC37; };
+		514F1344D276B0881A6E24E3 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MyongjiMealsApp.swift"; sourceTree = "<group>"; };
+		EE422493CA2B8F64E3B0E5A3 = { isa = PBXBuildFile; fileRef = 514F1344D276B0881A6E24E3; };
+		F3A416243CA6A2FFE999CDCE = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsView.swift"; sourceTree = "<group>"; };
+		EF8431AC2777E551414F7BB6 = { isa = PBXBuildFile; fileRef = F3A416243CA6A2FFE999CDCE; };
+		3685E330EC5277A9DD5661C6 = { isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = App/Assets.xcassets; sourceTree = "<group>"; };
+		716E9590E60B3AFA6E62BF18 = { isa = PBXBuildFile; fileRef = 3685E330EC5277A9DD5661C6; };
+		4E783A9E10D2A8ABA38CD11C = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyongjiMeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8309DD304D804F9D7F6302F5 = { isa = PBXGroup; children = (EED83A53AB46182721199B37,83125E41827F2974D8E382F5,B09BA383F8AC0B0AB2855A48,D11F37BE15FE7F49E59CC797,FB675CC6BDA202DFF799EC37,514F1344D276B0881A6E24E3,F3A416243CA6A2FFE999CDCE,); path = Sources/MyongjiMealsApp; sourceTree = "<group>"; };
+		615B463D1028E4E24B674CF7 = { isa = PBXGroup; children = (4E783A9E10D2A8ABA38CD11C,); name = Products; sourceTree = "<group>"; };
+		42944EBC669F21BC22392EB5 = { isa = PBXGroup; children = (8309DD304D804F9D7F6302F5, 3685E330EC5277A9DD5661C6, 615B463D1028E4E24B674CF7,); sourceTree = "<group>"; };
+		CF21FADD42EAB8F8303A3895 = { isa = XCLocalSwiftPackageReference; relativePath = .; };
+		22D631A9E2B5604C52330DB7 = { isa = XCSwiftPackageProductDependency; package = CF21FADD42EAB8F8303A3895; productName = MealCore; };
+		EFC828568B8852C8AF471735 = { isa = PBXBuildFile; productRef = 22D631A9E2B5604C52330DB7; };
+		F612CD2E22E187AC48B5913C = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (9616D5AC67EC540B7DCD2C2D,B2ACF94CB45F4A821E154F02,5D747905D5543C4DC21D31E5,94BEF017BC4A1FDB48522FDD,EB2AF3F949F50866C7DD834E,EE422493CA2B8F64E3B0E5A3,EF8431AC2777E551414F7BB6,); runOnlyForDeploymentPostprocessing = 0; };
+		69680EDE0CF9B24DB8DBFE04 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (EFC828568B8852C8AF471735,); runOnlyForDeploymentPostprocessing = 0; };
+		86F6FE2DD6E869C1842A14B3 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (716E9590E60B3AFA6E62BF18,); runOnlyForDeploymentPostprocessing = 0; };
+		ED8772ADEC3A6C25161BC957 = { isa = XCBuildConfiguration; buildSettings = { CLANG_ENABLE_MODULES = "YES"; CLANG_ENABLE_OBJC_ARC = "YES"; SDKROOT = "iphoneos"; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; SWIFT_VERSION = "5.0"; ENABLE_USER_SCRIPT_SANDBOXING = "YES"; DEBUG_INFORMATION_FORMAT = "dwarf"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG"; ENABLE_TESTABILITY = "YES"; }; name = Debug; };
+		4D8F54E7CBAF670D9F6C230D = { isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon"; ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "AccentColor"; CODE_SIGN_STYLE = "Automatic"; CURRENT_PROJECT_VERSION = "1"; MARKETING_VERSION = "0.1.0"; GENERATE_INFOPLIST_FILE = "YES"; INFOPLIST_KEY_CFBundleDisplayName = "명지밥"; INFOPLIST_KEY_MJUMealFeedURL = ""; INFOPLIST_KEY_UILaunchScreen_Generation = "YES"; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = "YES"; INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"; PRODUCT_BUNDLE_IDENTIFIER = "kr.mjubap.app"; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = "NO"; TARGETED_DEVICE_FAMILY = "1"; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks"; SWIFT_EMIT_LOC_STRINGS = "YES"; }; name = Debug; };
+		00F209874A1F7309F6DCEAA7 = { isa = XCBuildConfiguration; buildSettings = { CLANG_ENABLE_MODULES = "YES"; CLANG_ENABLE_OBJC_ARC = "YES"; SDKROOT = "iphoneos"; IPHONEOS_DEPLOYMENT_TARGET = "17.0"; SWIFT_VERSION = "5.0"; ENABLE_USER_SCRIPT_SANDBOXING = "YES"; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; SWIFT_OPTIMIZATION_LEVEL = "-O"; SWIFT_ACTIVE_COMPILATION_CONDITIONS = ""; ENABLE_TESTABILITY = "NO"; }; name = Release; };
+		1A6EFC2CD0AF63DD14BE0438 = { isa = XCBuildConfiguration; buildSettings = { ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon"; ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "AccentColor"; CODE_SIGN_STYLE = "Automatic"; CURRENT_PROJECT_VERSION = "1"; MARKETING_VERSION = "0.1.0"; GENERATE_INFOPLIST_FILE = "YES"; INFOPLIST_KEY_CFBundleDisplayName = "명지밥"; INFOPLIST_KEY_MJUMealFeedURL = ""; INFOPLIST_KEY_UILaunchScreen_Generation = "YES"; INFOPLIST_KEY_UIApplicationSceneManifest_Generation = "YES"; INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"; PRODUCT_BUNDLE_IDENTIFIER = "kr.mjubap.app"; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SUPPORTS_MACCATALYST = "NO"; TARGETED_DEVICE_FAMILY = "1"; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks"; SWIFT_EMIT_LOC_STRINGS = "YES"; }; name = Release; };
+		640DC9EFD529235A8D9E2727 = { isa = XCConfigurationList; buildConfigurations = (ED8772ADEC3A6C25161BC957, 00F209874A1F7309F6DCEAA7,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		976B52545947CA66FD9EF2A4 = { isa = XCConfigurationList; buildConfigurations = (4D8F54E7CBAF670D9F6C230D, 1A6EFC2CD0AF63DD14BE0438,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		0E8A3AD980EC179856012B7E = { isa = PBXNativeTarget; buildConfigurationList = 976B52545947CA66FD9EF2A4; buildPhases = (F612CD2E22E187AC48B5913C, 69680EDE0CF9B24DB8DBFE04, 86F6FE2DD6E869C1842A14B3,); buildRules = (); dependencies = (); name = MyongjiMeals; packageProductDependencies = (22D631A9E2B5604C52330DB7,); productName = MyongjiMeals; productReference = 4E783A9E10D2A8ABA38CD11C; productType = "com.apple.product-type.application"; };
+		98F54143AB4E86B28C3AFEE0 = { isa = PBXProject; attributes = { BuildIndependentTargetsInParallel = YES; LastUpgradeCheck = 1600; TargetAttributes = { 0E8A3AD980EC179856012B7E = { CreatedOnToolsVersion = 16.0; }; }; }; buildConfigurationList = 640DC9EFD529235A8D9E2727; compatibilityVersion = "Xcode 14.0"; developmentRegion = ko; hasScannedForEncodings = 0; knownRegions = (ko, en, Base); mainGroup = 42944EBC669F21BC22392EB5; packageReferences = (CF21FADD42EAB8F8303A3895,); productRefGroup = 615B463D1028E4E24B674CF7; projectDirPath = ""; projectRoot = ""; targets = (0E8A3AD980EC179856012B7E,); };
+	};
+	rootObject = 98F54143AB4E86B28C3AFEE0;
+}

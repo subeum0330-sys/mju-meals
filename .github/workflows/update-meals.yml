@@ -1,0 +1,102 @@
+name: Update cafeteria menus
+
+on:
+  schedule:
+    # 09:17, 13:17 and 18:17 Asia/Seoul, including late posts and corrections.
+    - cron: '17 0,4,9 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Check real API access and extraction without publishing'
+        type: boolean
+        default: true
+      bootstrap:
+        description: 'First deployment only: allow reviewed seed if meals.json is HTTP 404'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cafeteria-feed-pages
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    # Set this repository variable only after adding credentials and testing.
+    if: github.event_name == 'workflow_dispatch' || vars.MEAL_AUTOMATION_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    timeout-minutes: 20
+    outputs:
+      has_failures: ${{ steps.status.outputs.has_failures }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Verify collector offline
+        run: python -m unittest discover -s backend/tests -v
+      - name: Collect menus
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IG_GRAPH_VERSION: ${{ vars.IG_GRAPH_VERSION }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          MEAL_FEED_URL: ${{ vars.MEAL_FEED_URL }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          BOOTSTRAP: ${{ inputs.bootstrap }}
+        shell: bash
+        run: |
+          args=(--output-dir _site)
+          if [[ "$DRY_RUN" == "true" ]]; then args+=(--dry-run); fi
+          if [[ "$BOOTSTRAP" == "true" ]]; then args+=(--bootstrap); fi
+          python -m backend.collect "${args[@]}"
+      - name: Read collection status
+        id: status
+        if: ${{ !inputs.dry_run }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          status = json.loads(Path('_site/status.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('has_failures=' + str(status['hasFailures']).lower() + '\n')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('Updated weeks: ' + str(status['updatedWeeks']) + '\n\n')
+              summary.write('Failed checks: ' + str(len(status['failures'])) + '\n')
+          PY
+      - name: Configure Pages
+        if: ${{ !inputs.dry_run }}
+        uses: actions/configure-pages@v5
+      - name: Upload validated public feed
+        if: ${{ !inputs.dry_run }}
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    if: ${{ !inputs.dry_run }}
+    needs: collect
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy validated feed
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Report partial collection failures
+        if: needs.collect.outputs.has_failures == 'true'
+        run: |
+          echo 'Some source checks failed. Valid data was preserved and successful updates were published. Inspect collection status.json and the collect job.'
+          exit 1
