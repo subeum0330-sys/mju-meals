@@ -37,11 +37,12 @@ for path in files:
     source_builds.append(uid(f"build:{path.name}"))
 
 obj("assets", 'isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = App/Assets.xcassets; sourceTree = "<group>";')
+obj("info-plist", 'isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = App/Info.plist; sourceTree = "<group>";')
 obj("assets-build", f"isa = PBXBuildFile; fileRef = {uid('assets')};")
 obj("app-product", 'isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyongjiMeals.app; sourceTree = BUILT_PRODUCTS_DIR;')
 obj("sources-group", f'isa = PBXGroup; children = ({",".join(source_refs)},); path = Sources/MyongjiMealsApp; sourceTree = "<group>";')
 obj("products-group", f'isa = PBXGroup; children = ({uid("app-product")},); name = Products; sourceTree = "<group>";')
-obj("root-group", f'isa = PBXGroup; children = ({uid("sources-group")}, {uid("assets")}, {uid("products-group")},); sourceTree = "<group>";')
+obj("root-group", f'isa = PBXGroup; children = ({uid("sources-group")}, {uid("assets")}, {uid("info-plist")}, {uid("products-group")},); sourceTree = "<group>";')
 obj("local-package", 'isa = XCLocalSwiftPackageReference; relativePath = .;')
 obj("mealcore-product", f'isa = XCSwiftPackageProductDependency; package = {uid("local-package")}; productName = MealCore;')
 obj("mealcore-build", f'isa = PBXBuildFile; productRef = {uid("mealcore-product")};')
@@ -64,8 +65,9 @@ for config in ("Debug", "Release"):
         "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
         "CODE_SIGN_STYLE": "Automatic", "CURRENT_PROJECT_VERSION": "1",
         "MARKETING_VERSION": "0.1.0", "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "App/Info.plist",
         "INFOPLIST_KEY_CFBundleDisplayName": "명지밥",
-        "INFOPLIST_KEY_MJUMealFeedURL": FEED_URL,
+        "MJU_MEAL_FEED_URL": FEED_URL,
         "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",

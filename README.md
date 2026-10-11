@@ -60,9 +60,9 @@ swift run MyongjiMealsPreview
 python3 scripts/generate_xcode_project.py
 ```
 
-이 환경에는 Xcode가 없어 **iOS 기기·시뮬레이터 빌드는 아직 검증하지 못했습니다.** Mac용 SwiftUI 빌드와 핵심 로직 검사는 별도로 수행합니다. 최신 결과는 [검증 기록](docs/VALIDATION.md)에 있습니다.
+Xcode 27.0에서 **서명 없는 iPhone용 Debug 빌드**를 통과했고, 완성된 앱에 공개 식단 주소가 들어 있는 것을 확인했습니다. 실제 iPhone 서명·설치·실행과 시뮬레이터 실행은 아직 확인 중입니다. 최신 결과는 [검증 기록](docs/VALIDATION.md)에 있습니다.
 
-Command Line Tools만 설치된 현재 Mac이나 동기화 폴더의 서명 오류 환경에서는 `bash scripts/check_local.sh`를 사용하세요. SDK와 임시 빌드 폴더를 설정합니다. 테스트에는 Swift 6 도구 체인의 Swift Testing을 사용합니다.
+Command Line Tools만 설치된 Mac이나 동기화 폴더의 서명 오류 환경에서는 `bash scripts/check_local.sh`를 사용하세요. SDK와 임시 빌드 폴더를 설정합니다. 테스트에는 Swift 6 도구 체인의 Swift Testing을 사용합니다.
 
 `output/명지밥 미리보기.app`은 같은 화면 코드를 실행하는 Mac 개발용 미리보기이며 iPhone 설치 파일이 아닙니다.
 
