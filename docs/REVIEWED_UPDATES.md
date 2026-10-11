@@ -16,6 +16,8 @@
 
 ## 처음 한 번 준비할 것
 
+이 저장소는 2026-10-11에 첫 게시를 완료했고, 앱 소스에도 공개 식단 주소를 설정했습니다. 현재 게시한 자료는 이미 확인한 2026-10-05~09 식단이며, 10월 12일 주간 자료가 확인되었다는 뜻은 아닙니다.
+
 - 저장소의 Settings → Pages → Source를 **GitHub Actions**로 설정합니다.
 - `Publish reviewed menus` 작업이 성공하면 [식단 게시 상태](https://subeum0330-sys.github.io/mju-meals/)와 [앱용 식단 파일](https://subeum0330-sys.github.io/mju-meals/meals.json)을 확인합니다.
 - 앱의 공개 주소를 설정하고 한 번 다시 빌드합니다. 이후 식단만 바꿀 때는 앱을 다시 설치할 필요가 없습니다.
