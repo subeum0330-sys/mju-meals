@@ -23,8 +23,8 @@
 
 1. Mac에 **Xcode 16 이상**을 설치합니다. Command Line Tools만으로는 iOS 앱을 빌드할 수 없습니다.
 2. `MyongjiMeals.xcodeproj`를 Xcode로 엽니다.
-3. 실행 대상에서 iPhone 시뮬레이터를 선택하고 **⌘R**을 누릅니다.
-4. 실제 iPhone은 연결 후 **Signing & Capabilities → Team**에서 본인의 Apple 계정을 선택합니다. 필요하면 Bundle Identifier도 고유 값으로 변경합니다.
+3. 실제 iPhone은 케이블로 연결하고 **Signing & Capabilities → Team**에서 본인의 Apple 계정을 선택합니다. 필요하면 Bundle Identifier도 고유 값으로 변경합니다.
+4. 실행 대상에서 연결한 iPhone(또는 iPhone 시뮬레이터)을 선택하고 **⌘R**을 누릅니다. 실제 기기에서는 개발자 모드를 켜야 하며, 첫 실행 시 본인 개발자 계정에 대한 신뢰 확인이 필요할 수 있습니다.
 
 공유 실행 Scheme이 포함되어 있고 추가 패키지 다운로드는 필요하지 않습니다. App Store 또는 TestFlight 배포·서명은 아직 설정하지 않았습니다.
 
@@ -60,7 +60,7 @@ swift run MyongjiMealsPreview
 python3 scripts/generate_xcode_project.py
 ```
 
-Xcode 27.0에서 **서명 없는 iPhone용 Debug 빌드**를 통과했고, 완성된 앱에 공개 식단 주소가 들어 있는 것을 확인했습니다. 실제 iPhone 서명·설치·실행과 시뮬레이터 실행은 아직 확인 중입니다. 최신 결과는 [검증 기록](docs/VALIDATION.md)에 있습니다.
+Xcode 27.0에서 **iPhone용 Debug 빌드·개인 계정 서명·실제 iPhone 17 설치·실행**을 확인했습니다. 완성된 앱에 공개 식단 주소가 들어 있고, 실행 후 앱 프로세스가 유지되는 것도 확인했습니다. 시뮬레이터 실행과 기기에서의 상세 기능 검사는 별도입니다. 최신 결과는 [검증 기록](docs/VALIDATION.md)에 있습니다.
 
 Command Line Tools만 설치된 Mac이나 동기화 폴더의 서명 오류 환경에서는 `bash scripts/check_local.sh`를 사용하세요. SDK와 임시 빌드 폴더를 설정합니다. 테스트에는 Swift 6 도구 체인의 Swift Testing을 사용합니다.
 

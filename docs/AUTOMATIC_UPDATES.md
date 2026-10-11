@@ -92,7 +92,7 @@ python3 scripts/configure_meal_feed.py 'https://OWNER.github.io/REPO/meals.json'
 
 명령은 `App/MealFeedConfiguration.json`에 공개 URL을 저장하고 Xcode 프로젝트를 갱신합니다. **그다음 앱을 다시 빌드·설치해야 주소가 적용됩니다.** 이후 같은 주소의 메뉴 데이터가 바뀔 때마다 앱을 다시 배포할 필요는 없습니다. 앱에서 불러오거나 새로고침하면 공개 피드를 요청합니다.
 
-앱 설정의 ‘연결 주소 설정됨’은 주소가 들어 있다는 뜻입니다. 실제 수집·배포 성공 여부는 Actions와 `status.json`을 확인해야 합니다. Xcode 27.0에서 서명 없는 iPhone용 빌드와 완성된 앱의 공개 주소 포함 여부를 확인했습니다. 실제 iPhone 서명·설치·실행은 아직 확인 중입니다.
+앱 설정의 ‘연결 주소 설정됨’은 주소가 들어 있다는 뜻입니다. 실제 수집·배포 성공 여부는 Actions와 `status.json`을 확인해야 합니다. Xcode 27.0에서 iPhone용 빌드, 완성된 앱의 공개 주소 포함 여부, 개인 계정 서명 및 실제 iPhone 설치·실행을 확인했습니다. 실제 기기의 원격 피드 수신을 화면·네트워크 기록으로 대조하는 검사는 별도입니다.
 
 연결을 해제하려면 `python3 scripts/configure_meal_feed.py --clear` 후 앱을 다시 빌드합니다. 예약 수집 자체를 중지하려면 GitHub의 `MEAL_AUTOMATION_ENABLED`를 `false`로 변경하세요.
 
