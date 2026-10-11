@@ -1,6 +1,8 @@
 # 서버 없이 자동 갱신 연결하기
 
-**코드는 준비되어 있지만 아직 배포하지 않았습니다.** GitHub가 정해진 시각에 수집기를 실행하고 식단 파일을 공개하도록 설정하면, 개인 서버를 계속 켜 둘 필요가 없습니다. 현재 앱에는 10월 5일~9일에 대해 직접 확인한 식단만 들어 있습니다.
+**이 문서는 나중에 선택할 수 있는 인스타 자동 수집 방식입니다.** 현재는 [식단 사진을 확인해 등록하는 방식](REVIEWED_UPDATES.md)을 사용하므로 아래 Meta·OpenAI 계정 설정은 필요하지 않습니다. 공식 API 수집은 아직 실제 자격 증명으로 검증하지 않았습니다.
+
+인스타 자동 수집을 다시 선택할 때만 이 문서를 따라가세요. 저장소 변수 `MEAL_UPDATE_MODE`를 `instagram`으로 설정해야 아래 작업이 실행됩니다. 이 값은 사진 확인본 게시 작업을 중단시키므로 계정 설정을 준비한 뒤 수동 검사 직전에 변경하세요. 확인본 게시 방식으로 돌아오려면 이 변수를 `reviewed`로 바꾸면 됩니다.
 
 자동 수집 경로는 **식당 인스타그램 → 공식 Meta API → 이미지 판독 → GitHub Pages의 meals.json → iPhone 앱**입니다. 먼저 Meta API로 네 계정을 읽을 수 있는지 확인해야 합니다. 계정 이름만으로 자동 수집이 보장되지는 않습니다.
 
@@ -55,6 +57,7 @@ https://OWNER.github.io/REPO/meals.json
 | Variables | `IG_GRAPH_VERSION` | Meta 앱이 지원하는 버전, `v숫자.숫자` 형식 |
 | Variables | `OPENAI_MODEL` | 이미지 입력과 Structured Outputs를 지원하며 본인 프로젝트에서 사용 가능한 모델 ID |
 | Variables | `MEAL_FEED_URL` | 위에서 정한 공개 `meals.json` 주소 |
+| Variables | `MEAL_UPDATE_MODE` | 자동 수집 검사 직전에 `instagram`으로 설정 |
 | Variables | `MEAL_AUTOMATION_ENABLED` | 처음에는 `false` |
 
 모델은 코드에 기본값을 넣지 않았습니다. 사용할 모델의 이미지 입력·구조화 출력 지원을 확인해 지정하세요. [이미지 입력](https://developers.openai.com/api/docs/guides/images-vision), [Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
@@ -63,7 +66,7 @@ https://OWNER.github.io/REPO/meals.json
 
 ## 5. 게시 없이 실제 연결 검사
 
-1. 저장소 **Actions → Update cafeteria menus → Run workflow**를 엽니다.
+1. 저장소 **Actions → Instagram collection (optional) → Run workflow**를 엽니다.
 2. 기본 브랜치를 선택합니다.
 3. **dry_run = true**, **bootstrap = true**로 실행합니다.
 4. 실행 결과에서 네 계정의 실패 여부를 확인합니다. 실패했다면 로그의 계정과 실패 코드를 보고 권한·토큰·모델·날짜 인식 문제를 해결합니다.
@@ -89,7 +92,7 @@ python3 scripts/configure_meal_feed.py 'https://OWNER.github.io/REPO/meals.json'
 
 명령은 `App/MealFeedConfiguration.json`에 공개 URL을 저장하고 Xcode 프로젝트를 갱신합니다. **그다음 앱을 다시 빌드·설치해야 주소가 적용됩니다.** 이후 같은 주소의 메뉴 데이터가 바뀔 때마다 앱을 다시 배포할 필요는 없습니다. 앱에서 불러오거나 새로고침하면 공개 피드를 요청합니다.
 
-앱 설정의 ‘서버 주소 설정됨’은 주소가 들어 있다는 뜻입니다. 실제 수집·배포 성공 여부는 Actions와 `status.json`을 확인해야 합니다. 현재 개발 환경에는 Xcode가 없어 iPhone 빌드·설치는 아직 검증하지 못했습니다.
+앱 설정의 ‘연결 주소 설정됨’은 주소가 들어 있다는 뜻입니다. 실제 수집·배포 성공 여부는 Actions와 `status.json`을 확인해야 합니다. 현재 개발 환경에는 Xcode가 없어 iPhone 빌드·설치는 아직 검증하지 못했습니다.
 
 연결을 해제하려면 `python3 scripts/configure_meal_feed.py --clear` 후 앱을 다시 빌드합니다. 예약 수집 자체를 중지하려면 GitHub의 `MEAL_AUTOMATION_ENABLED`를 `false`로 변경하세요.
 

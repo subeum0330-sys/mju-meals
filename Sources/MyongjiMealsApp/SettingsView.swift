@@ -53,10 +53,10 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    LabeledContent("자동 갱신", value: model.isAutomaticRefreshConfigured ? "서버 주소 설정됨" : "서버 연결 전")
+                    LabeledContent("식단 연결", value: model.isAutomaticRefreshConfigured ? "연결 주소 설정됨" : "연결 전")
                     Text(model.isAutomaticRefreshConfigured
-                         ? "앱을 열거나 다시 활성화할 때 서버의 최신 식단을 받아와요. 화면을 당겨서 새로고침할 수도 있어요."
-                         : "아직 자동 수집 서버를 연결하지 않았어요. 현재는 저장된 인스타 확인본과 학교 홈페이지 식단을 표시해요.")
+                         ? "앱을 열거나 다시 활성화할 때 새로 등록된 식단을 받아와요. 화면을 당겨서 새로고침할 수도 있어요. 등록되지 않은 주의 식단은 이전 주 메뉴로 채우지 않아요."
+                         : "아직 식단 연결 주소가 설정되지 않았어요. 현재는 저장된 인스타 확인본과 학교 홈페이지 식단을 표시해요.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     if let message = model.errorMessage {

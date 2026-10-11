@@ -4,7 +4,9 @@
 
 현재 앱에는 **2026년 10월 5일~9일 인스타그램 식단 확인본 35개 항목**이 들어 있습니다. 네 식당의 원본 이미지와 대조했고, 메뉴와 공휴일 안내를 포함합니다. 확인 시각은 10월 9일 11:22(한국 시간)입니다.
 
-매주 올라오는 식단을 가져올 **자동 수집기와 앱의 공개 데이터 연결 기능도 구현했습니다.** GitHub Actions가 식단을 수집하고 GitHub Pages가 결과를 제공하므로 별도 서버를 구입할 필요는 없습니다. 다만 **계정·API 키 등록, 실제 API 접근 확인, 배포와 앱 주소 설정은 아직 하지 않았으며 현재 자동 갱신은 작동 중이 아닙니다.** [자동 갱신 설정 안내](docs/AUTOMATIC_UPDATES.md)에 활성화 순서를 정리했습니다.
+현재는 **Codex가 매주 월요일 오전 9시(한국 시간)에 네 식당의 인스타그램을 열어 식단 사진을 확인하는 방식**입니다. 확인된 식단을 저장소에 반영하면 GitHub Pages에 게시되고 앱이 새 자료를 받아옵니다. Meta 개발자 등록이나 별도 API 키는 필요하지 않습니다. 예약은 이 프로젝트의 로컬 대화에 등록되어 있으므로 해당 시간에 Mac과 앱이 켜져 있고 브라우저·GitHub 연결을 사용할 수 있어야 합니다. 로그인 제한이나 미게시 때문에 확인하지 못한 자료는 추측하지 않습니다. [주간 확인과 게시 안내](docs/REVIEWED_UPDATES.md)를 참고하세요.
+
+인스타그램 공식 API 수집 코드는 나중에 사용할 수 있도록 보관했습니다. 현재 방식에는 필요하지 않으며, [자동 수집 설정](docs/AUTOMATIC_UPDATES.md)은 선택 사항입니다.
 
 ## 사용 기능
 
@@ -35,7 +37,7 @@
 | 생활관·복지동 | [@mj_bokji_foodist](https://www.instagram.com/mj_bokji_foodist/p/DeIjXAxDzEo/) | 중식·석식 |
 | 교직원·방목관 | [@mj_bangmok_foodist](https://www.instagram.com/mj_bangmok_foodist/p/DeIg1_ukzE2/) | 중식·석식 |
 
-앱은 연결된 공개 피드 → 앱에 포함된 확인본 → 학교 홈페이지 순으로 선택한 식당·주의 데이터를 찾습니다. 현재는 공개 피드 주소가 비어 있어 확인본과 학교 홈페이지를 사용합니다. 다음 주 확인본이 없고 학교 홈페이지에도 메뉴가 없으면 미게시로 표시합니다.
+앱은 연결된 공개 피드 → 앱에 포함된 확인본 → 학교 홈페이지 순으로 선택한 식당·주의 데이터를 찾습니다. 공개 피드 주소는 `https://subeum0330-sys.github.io/mju-meals/meals.json`입니다. 다음 주 확인본이 없고 학교 홈페이지에도 메뉴가 없으면 미게시로 표시합니다. 서버 주소 변경 후에는 앱을 한 번 다시 빌드해야 합니다.
 
 10월 8일 조사 때 비어 있던 것은 **학교 홈페이지의 10월 5일~11일 식단**입니다. 초기 미리보기의 9월 10일 메뉴는 과거 학교 게시물이었으며 이번 주 메뉴가 아니었습니다. 위 인스타그램 식단은 별도로 확인해 추가한 데이터입니다. 상세한 출처와 처리 기준은 [데이터 출처](docs/DATA_SOURCE.md)를 참고하세요.
 
@@ -69,11 +71,12 @@ Command Line Tools만 설치된 현재 Mac이나 동기화 폴더의 서명 오�
 | 경로 | 역할 |
 | --- | --- |
 | `Sources/MealCore` | 날짜·식당 모델, 학교 HTML 수신·파싱, 식단 확인본과 원격 피드 검증 |
-| `Sources/MealCore/Resources/instagram-reviewed.json` | 직접 대조한 10월 5일 주간 식단 |
+| `Sources/MealCore/Resources/instagram-reviewed.json` | 원본 사진과 직접 대조한 주간 식단 확인본 |
 | `Sources/MyongjiMealsApp` | SwiftUI 화면과 상태 관리 |
-| `backend` | Meta API 조회·이미지 판독·공개 식단 생성 |
-| `.github/workflows/update-meals.yml` | 정기 수집 및 GitHub Pages 배포 |
-| `App/MealFeedConfiguration.json` | 앱에 넣을 공개 피드 URL, 기본값은 미설정 |
+| `backend/publish_reviewed.py` | 키 없이 확인본을 검증하고 공개 식단 생성 |
+| `.github/workflows/publish-reviewed-meals.yml` | 확인본이 바뀌면 GitHub Pages 배포 |
+| `backend/collect.py`, `.github/workflows/update-meals.yml` | 선택 사항인 인스타 자동 수집, 기본 중단 |
+| `App/MealFeedConfiguration.json` | 앱에 넣을 공개 피드 URL |
 | `MyongjiMeals.xcodeproj` | iPhone 앱 실행용 프로젝트 |
 
 홈 화면 위젯, 점심 전 알림, 선호 메뉴 알림은 현재 버전에 포함되지 않습니다.

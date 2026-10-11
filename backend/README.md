@@ -1,6 +1,10 @@
-# 식단 자동 수집기
+# 식단 게시와 선택 사항인 자동 수집
 
-이 코드는 매일 세 번 네 식당의 새 주간 식단과 수정 게시물을 확인하는 GitHub Actions 수집기입니다. 별도 서버 프로세스나 데이터베이스가 필요하지 않습니다. **아직 실제 자격 증명으로 실행하거나 GitHub에 배포하지 않았습니다.** 식당의 공개 프로필을 브라우저에서 볼 수 있다는 사실만으로 공식 API 접근이 보장되지는 않습니다.
+현재 기본 방식은 **사진 확인본 게시**입니다. `python3 -m backend.publish_reviewed --output-dir _site`는 API 키 없이 검수된 JSON을 검증하고 앱용 공개 파일을 만듭니다. 이 프로젝트 대화의 주 1회 예약이 브라우저에서 인스타 식단을 확인하고 검수 자료를 업데이트합니다. 이 프로그램 자체는 사진을 수집하거나 판독하지 않습니다. [사용 안내](../docs/REVIEWED_UPDATES.md)를 먼저 읽으세요.
+
+아래는 현재 꺼져 있는 인스타 자동 수집기의 설명입니다. `MEAL_UPDATE_MODE=instagram`을 명시적으로 설정해야 GitHub에서 이 수집기가 실행됩니다.
+
+`collect.py`는 매일 세 번 네 식당의 새 주간 식단과 수정 게시물을 확인하는 선택 사항인 GitHub Actions 수집기입니다. 별도 서버 프로세스나 데이터베이스가 필요하지 않습니다. **아직 실제 자격 증명으로 실행하지 않았습니다.** 식당의 공개 프로필을 브라우저에서 볼 수 있다는 사실만으로 공식 API 접근이 보장되지는 않습니다.
 
 ## 실행 흐름
 
@@ -26,7 +30,7 @@ Repository → Settings → Secrets and variables → Actions에 추가합니다
 | Variable | `MEAL_FEED_URL` | `https://계정.github.io/저장소/meals.json` |
 | Variable | `MEAL_AUTOMATION_ENABLED` | 테스트 후 `true`로 설정하면 예약 실행 시작 |
 
-Pages의 Source는 `GitHub Actions`로 설정합니다. `Update cafeteria menus` 작업의 수동 실행은 기본적으로 **dry_run=true**이며 API 조회/판독만 수행합니다. 최초 실행에는 **bootstrap=true**도 선택해야 아직 없는 피드의 HTTP 404에 한해 검수한 초기 자료를 읽습니다. dry_run 성공 후 dry_run=false, bootstrap=true로 최초 게시하고, 이후 bootstrap=false로 사용합니다. 이미 게시된 피드에 문제가 생기면 임의로 초기 자료로 덮어쓰지 않습니다.
+Pages의 Source는 `GitHub Actions`로 설정합니다. `Instagram collection (optional)` 작업의 수동 실행은 기본적으로 **dry_run=true**이며 API 조회/판독만 수행합니다. 최초 실행에는 **bootstrap=true**도 선택해야 아직 없는 피드의 HTTP 404에 한해 검수한 초기 자료를 읽습니다. dry_run 성공 후 dry_run=false, bootstrap=true로 최초 게시하고, 이후 bootstrap=false로 사용합니다. 이미 게시된 피드에 문제가 생기면 임의로 초기 자료로 덮어쓰지 않습니다.
 
 예약 시각은 한국 시간 09:17·13:17·18:17입니다. GitHub의 예약 작업은 지연되거나 건너뛸 수 있으며 정확한 시각을 보장하지 않습니다. 앱을 배포한 뒤에도 토큰 만료, Meta 권한/API 버전 변경, 계정 유형 변경, GitHub의 예약 실행 중지와 비용 한도를 관리해야 합니다.
 

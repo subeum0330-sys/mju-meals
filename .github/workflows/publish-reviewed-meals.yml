@@ -1,0 +1,62 @@
+name: Publish reviewed menus
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Sources/MealCore/Resources/instagram-reviewed.json'
+      - 'backend/publish_reviewed.py'
+      - 'backend/collect.py'
+      - 'backend/tests/**'
+      - '.github/workflows/publish-reviewed-meals.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cafeteria-feed-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # Reviewed uploads are the default; Instagram automation is opt-in.
+    if: github.ref == 'refs/heads/main' && vars.MEAL_UPDATE_MODE != 'instagram'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Older queued runs must not restore menus from an older commit.
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Verify menu publishing
+        run: python -m unittest discover -s backend/tests -v
+      - name: Build reviewed feed without API keys
+        run: python -m backend.publish_reviewed --output-dir _site
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload reviewed feed
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy reviewed menus
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,4 +1,4 @@
-name: Update cafeteria menus
+name: Instagram collection (optional)
 
 on:
   schedule:
@@ -24,8 +24,8 @@ concurrency:
 
 jobs:
   collect:
-    # Set this repository variable only after adding credentials and testing.
-    if: github.event_name == 'workflow_dispatch' || vars.MEAL_AUTOMATION_ENABLED == 'true'
+    # In the default reviewed-upload mode this workflow never calls APIs.
+    if: vars.MEAL_UPDATE_MODE == 'instagram' && (github.event_name == 'workflow_dispatch' || vars.MEAL_AUTOMATION_ENABLED == 'true')
     runs-on: ubuntu-latest
     permissions:
       contents: read

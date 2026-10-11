@@ -1,9 +1,11 @@
 # 검증 기록
 
-최종 정리: 2026-10-10 (Asia/Seoul). 인스타 원본 대조 시각은 2026-10-09 11:22이며, 이를 새 검수 시각으로 바꾸지 않았습니다.
+최종 정리: 2026-10-11 (Asia/Seoul). 인스타 원본 대조 시각은 2026-10-09 11:22이며, 이를 새 검수 시각으로 바꾸지 않았습니다.
 
 ## 통과한 검사
 
+- 2026-10-10 사진 확인본 게시 방식 추가: 자격 증명 없이 공개 JSON·상태·안내 페이지 생성, 기존 메뉴 날짜와 확인 시각 보존
+- 확인본 게시 테스트 **10개**, 기존 수집기 테스트 **22개**, 합계 **32개** 통과. 계정·주차·중복·키가 아닌 필드·자동 기록 거부, 용량 제한, 실패 시 기존 공개 파일 보존, HTML 이스케이프, 한국 시간 기준 주 경계를 검사합니다. 주차별 테스트는 고정 테스트 자료를 사용하여 실제 다음 주 식단 추가를 막지 않습니다.
 - SwiftUI 앱과 MealCore의 macOS 빌드
 - Swift Testing 오프라인 테스트 **24개**: 학교 HTML·한국 날짜 처리 9개, 확인본과 출처 8개, 원격 피드 7개
 - 학교 라이브 테스트 **1개**: 자연캠퍼스 네 식당에 실제 요청하여 식당·주·날짜 일치 확인. 인스타 사본으로 우회하지 않는 별도 학교 요청을 검사했습니다.
@@ -21,13 +23,14 @@ Swift 기본 실행에서는 라이브 테스트 1개를 건너뜁니다. 위 �
 
 ## 아직 검증하지 않은 부분
 
+- **주간 브라우저 확인 예약의 첫 무인 실행**: 매주 월요일 오전 9시(한국 시간) 예약은 등록했지만 첫 실행 결과는 아직 없습니다. 실행 시 Mac·앱·브라우저·GitHub 연결과 사용 한도가 필요합니다.
 - **실제 Instagram Business Discovery 조회 및 OpenAI 이미지 판독**: API 자격 증명과 사용할 모델이 제공되지 않았습니다. 네 계정의 공식 API 조회 가능 여부도 미확인입니다.
-- **GitHub Actions 예약 실행 및 Pages 게시**: 저장소·Secrets·Variables·Pages 설정을 아직 연결하지 않았습니다. 자동 갱신은 가동 중이 아닙니다.
+- **GitHub Actions 인스타 예약 수집**: 실제 자격 증명이 없어 가동 중이 아닙니다. 기본값은 사진 확인본 게시 방식이며, `MEAL_UPDATE_MODE=instagram`이 아니면 인스타 수집기는 실행되지 않습니다.
 - **iOS 시뮬레이터와 실제 iPhone 빌드**: Xcode가 설치되어 있지 않습니다. 기기에서 글자 크기·VoiceOver·네트워크 중단 상황과 서명도 확인해야 합니다.
 - **AI 판독의 실제 정확도**: 날짜·형식 검증을 통과해도 글자를 잘못 읽을 수 있습니다. 실제 메뉴 이미지로 API 시험 실행 후 원본을 대조해야 합니다.
 - TestFlight/App Store 배포
 
-자동 수집의 시작 절차와 성공 기준은 [자동 갱신 설정 안내](AUTOMATIC_UPDATES.md)를 참고하세요.
+현재 사용하는 방식은 [사진 확인본 업데이트](REVIEWED_UPDATES.md)입니다. 인스타 자동 수집의 시작 절차와 성공 기준은 [선택 사항인 자동 수집 설정](AUTOMATIC_UPDATES.md)을 참고하세요.
 
 ## 재현
 
@@ -36,6 +39,7 @@ bash scripts/check_local.sh
 MJU_LIVE_TEST=1 bash scripts/check_local.sh --skip-build --filter LiveMealServiceTests
 python3 -m unittest discover -s backend/tests -v
 python3 -m backend.collect --fixture backend/tests/fixtures/weekly-posts.json --dry-run
+python3 -m backend.publish_reviewed --output-dir _site
 ```
 
 수집기는 Python 3.11 이상이며 이번 로컬 검증에는 제공된 Python 런타임을 사용했습니다. 외부 Python 패키지는 필요하지 않습니다.
