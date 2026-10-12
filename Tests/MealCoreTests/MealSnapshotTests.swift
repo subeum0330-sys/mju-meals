@@ -162,12 +162,29 @@ struct MealSnapshotTests {
             let holidayEntries = week.entries.filter { SchoolCalendar.dayKey($0.date) == "2026-10-09" }
             #expect(!holidayEntries.isEmpty)
             #expect(holidayEntries.allSatisfy { $0.isPublished && $0.items == ["공휴일"] })
-            #expect(store.week(for: cafeteria, date: date("2026-10-12")) == nil)
             totalEntries += week.entries.count
         }
         #expect(totalEntries == 35)
         let humanities = try #require(Cafeteria.all.first { $0.campus == .humanities })
         #expect(store.week(for: humanities, date: date("2026-10-08")) == nil)
+    }
+
+    @Test func bundledOctober12WeekLoadsTheCorrectRestaurantAndDay() throws {
+        let store = try MealSnapshotStore.bundled()
+        let expected = ["science-library": (5, "우삼겹중화짬뽕"),
+                        "science-student": (10, "돼지김치짜글이")]
+        for (id, values) in expected {
+            let cafeteria = try #require(Cafeteria.all.first { $0.id == id })
+            let week = try #require(store.week(for: cafeteria, date: date("2026-10-12")))
+            #expect(SchoolCalendar.dayKey(week.monday) == "2026-10-12")
+            #expect(week.entries.count == values.0)
+            #expect(week.snapshotSource?.username == cafeteria.instagramUsername)
+            #expect(week.entries.allSatisfy { SchoolCalendar.startOfWeek(containing: $0.date) == week.monday })
+            let lunch = try #require(week.entries.first {
+                SchoolCalendar.dayKey($0.date) == "2026-10-12" && $0.category == "중식"
+            })
+            #expect(lunch.items.first == values.1)
+        }
     }
 }
 
